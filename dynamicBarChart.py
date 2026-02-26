@@ -2,21 +2,22 @@ import matplotlib.pyplot as plt
 
 n = int(input("Enter number of categories: "))
 
-Employees = []
-Salaries = []
+categories = []
+values = []
 
 for i in range(n):
-    Employee = input(f"Enter name of category {i+1}: ")
-    Salary = int(input(f"Enter value for {Employee}: "))
+    category = input(f"Enter name of category {i+1}: ")
+    value = int(input(f"Enter value for {category}: "))
     
-    Employees.append(Employee)
-    Salaries.append(Salary)
+    categories.append(category)
+    values.append(value)
 
-plt.bar(Employee,Salary)
+plt.bar(categories,values)
 
-plt.xlabel("Employee")
-plt.ylabel("Salary")
+plt.xlabel("Categories")
+plt.ylabel("Values")
 plt.title("Dynamic Bar Chart")
+
 
 
 plt.show()
