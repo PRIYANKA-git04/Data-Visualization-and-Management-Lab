@@ -11,6 +11,6 @@ plt.scatter(x, y)
 
 plt.xlabel('X values')
 plt.ylabel('Y values')
-plt.title('Scatter Plot showing Negative Correlation with Clusters and Outlier')
+plt.title('Negative Correlation with Outlier')
 
 plt.show()
