@@ -1,0 +1,75 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+
+df = pd.read_excel("company_dataset04.xlsx")
+
+df.columns = df.columns.str.strip()
+
+df['ratings'] = df['ratings'].astype(str).str.extract(r'(\d+\.?\d*)').astype(float)
+
+
+df["review_count"] = df["review_count"].astype(str).str.extract('(\d+\.?\d*)')
+df["review_count"] = pd.to_numeric(df["review_count"], errors="coerce")
+
+df['employees'] = df['employees'].astype(str).str.replace(',', '')
+df['employees'] = df['employees'].str.extract(r'(\d+)').astype(float)
+
+df['years'] = df['years'].astype(str).str.extract(r'(\d+)').astype(float)
+
+df = df.dropna(subset=['employees', 'ratings', 'years'])
+
+# PIE CHART
+
+top_companies = df.head(10)
+
+plt.figure()
+plt.pie(top_companies['employees'],
+        labels=top_companies['name'],
+        autopct='%1.1f%%')
+plt.title("Employees Distribution (Top 10 Companies)")
+plt.show()
+
+# 2. FUNNEL CHART
+
+funnel_data = df.sort_values(by='ratings', ascending=False).head(10)
+
+plt.figure()
+plt.barh(funnel_data['name'], funnel_data['ratings'])
+plt.gca().invert_yaxis()
+plt.title("Funnel Chart (Ratings Wise)")
+plt.xlabel("Ratings")
+plt.ylabel("Company")
+plt.show()
+
+# 3. BAR CHART
+
+bar_data = df.head(10)
+
+plt.figure()
+plt.bar(bar_data['name'], bar_data['years'])
+plt.xticks(rotation=45)
+plt.title("Company vs Years")
+plt.xlabel("Company")
+plt.ylabel("Years")
+plt.tight_layout()
+plt.show()
+
+# 4. LINE CHART
+
+ctype_count = df['ctype'].value_counts()
+
+plt.figure()
+plt.plot(ctype_count.index, ctype_count.values, marker='o')
+plt.title("Company Type Distribution")
+plt.xlabel("Company Type")
+plt.ylabel("Count")
+plt.show()
+
+# 5. HISTOGRAM
+
+plt.figure()
+plt.hist(df['review_count'], bins=10)
+plt.title("Review Count Distribution")
+plt.xlabel("Review Count")
+plt.ylabel("Frequency")
+plt.show()
